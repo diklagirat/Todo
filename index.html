@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo MVC</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body onload="onInit()">
+    <div class="todo-container">
+        <div class="todo-header">
+            <h1>Todo MVC</h1>
+        </div>
+        <section class="todo-input">
+                <form onsubmit="onAddTodo(event)">
+                    <span>Importance:</span>
+                    <select class="importance">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <input  class="list-item" type="text" name="txt" placeholder="Add item..." />
+                    <button class="btn">+</button>
+                </form>
+            </section>
+            <section class="todo-filter">
+                <span>Filter By:</span>
+                <select onchange="onSetFilter(this.value)">
+                    <option value="">All</option>
+                    <option value="active">Active</option>
+                    <option value="done">Done</option>
+                </select>
+                <input type="text" name="filter-txt" oninput="onSetFilterByTxt(this.value)" placeholder="Start typing..." />
+            </section>
+            <section class="todo-sorting">
+                <span>Sort By:</span>
+                <select onchange="onSetSort(this.value)">
+                    <option value="txt">Text</option>
+                    <option value="created">Created</option>
+                    <option value="importance">Importance</option>
+                </select>
+            </section>
+            <section class="todo-list">
+                <ul></ul>
+            </section>
+            <section class="stat">
+                Total todos: <span class="total-count">3</span> Active: <span class="active-count">2</span>
+            </section>
+        </div>
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/todo.service.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
