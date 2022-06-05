@@ -7,14 +7,14 @@ var gFilterBy = {
     status: '',
     createTime: '',
 }
+var gSorteBy = {
+    txt: '',
+    status: '',
+    createTime: '',
+    importance: 1
+}
 
 _createTodos()
-
-function setTodosForDisplay(todos) {
-    if (todos.length === gTodos.length) {
-        gTodos = todos
-    }
-}
 
 function getTodosForDisplay() {
     var todos = gTodos
@@ -22,11 +22,41 @@ function getTodosForDisplay() {
     if (gFilterBy.status) {
         todos = todos.filter(todo =>
             todo.isDone && gFilterBy.status === 'done' ||
-            !todo.isDone && gFilterBy.status === 'active')
+            !todo.isDone && gFilterBy.status === 'active'
+        )
     }
     todos = todos.filter(todo => todo.txt.includes(gFilterBy.txt))
 
+    if (gSorteBy.status) {
+        _setSortTodos(gSorteBy.status, todos)
+    }
     return todos
+}
+
+function _setSortTodos(value, todos) {
+    switch (value) {
+        case 'txt': getTodosByTxt(todos)
+            break;
+        case 'created': getTodosByCreated(todos)
+            break;
+        case 'importance': getTodosByImportance(todos)
+            break;
+    }
+}
+function getTodosByTxt(todos) {
+    return todos.sort((t1, t2) => t1.txt.toUpperCase().localeCompare(t2.txt.toUpperCase()))
+}
+
+function getTodosByImportance(todos) {
+    return todos.sort((t1, t2) => t1.importance - t2.importance)
+}
+
+function getTodosByCreated(todos) {
+    return todos.sort((t1, t2) => {
+        if (t1.createTime > t2.createTime) return 1
+        else if (t1.createTime < t2.createTime) return -1
+        else return 0
+    })
 }
 
 function getTotalCount() {
@@ -61,8 +91,25 @@ function setFilterByStatus(status) {
     gFilterBy.status = status
 }
 
+function setSorteByStatus(status) {
+    gSorteBy.status = status
+}
+
 function setFilterByTxt(txt) {
     gFilterBy.txt = txt
+}
+
+function setSorteByTxt(txt) {
+    gSorteBy.txt = txt
+}
+
+function setSorteByImpotance(importance) {
+    gSorteBy.importance = importance
+
+}
+
+function setSorteByCreateTime(time) {
+    gSorteBy.createTime = time
 }
 
 function _createTodo(txt, importance) {
